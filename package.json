@@ -1,0 +1,63 @@
+{
+  "name": "local-work-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Privacy-first, production-quality local work activity tracker running entirely on localhost",
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "bootstrap": "tsx scripts/bootstrap.ts",
+    "dev": "npm run bootstrap && concurrently -k \"npm run dev:web\" \"npm run dev:collector\"",
+    "dev:web": "next dev -H 127.0.0.1 -p 3000",
+    "dev:collector": "tsx watch collector/index.ts",
+    "typegen": "next typegen",
+    "typecheck": "npm run typegen && tsc --noEmit",
+    "lint": "eslint .",
+    "test": "tsx --test tests/*.test.ts",
+    "test:watch": "tsx --test --watch tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "build": "next build",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "verify:full": "npm run verify && npm run test:e2e",
+    "start": "npm run bootstrap && concurrently -k \"npm run start:web\" \"npm run start:collector\"",
+    "start:web": "next start -H 127.0.0.1 -p 3000",
+    "start:collector": "tsx collector/index.ts",
+    "init-db": "tsx scripts/initialize-db.ts",
+    "reset-data": "tsx scripts/reset-data.ts"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^1.16.0",
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "recharts": "^2.15.1",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^3.0.1",
+    "zod": "^3.24.2"
+  },
+  "optionalDependencies": {
+    "active-win": "^8.2.1",
+    "uiohook-napi": "^1.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@playwright/test": "^1.50.1",
+    "@tailwindcss/postcss": "^4.0.6",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.20.1",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^4.0.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0",
+    "vitest": "^3.0.5"
+  }
+}
